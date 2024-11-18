@@ -104,6 +104,63 @@ LinksGo can be deployed to various platforms. We recommend AWS Elastic Beanstalk
 
 Detailed deployment instructions are available in [DEPLOYMENT.md](DEPLOYMENT.md).
 
+## 🚀 Deploying to AWS Amplify
+
+### Prerequisites
+1. An AWS account with appropriate permissions
+2. AWS Amplify CLI installed (optional, you can also deploy through the AWS Console)
+3. Your environment variables configured in AWS Amplify
+
+### Deployment Steps
+
+1. **Through AWS Console (Recommended)**:
+   - Go to AWS Amplify Console
+   - Click "New App" > "Host Web App"
+   - Connect to your GitHub repository
+   - Select the main/master branch
+   - Configure build settings:
+     - Build settings are already defined in `amplify.yml`
+   - Add environment variables from `.env.production`
+   - Click "Save and deploy"
+
+2. **Through Amplify CLI**:
+   ```bash
+   # Install Amplify CLI
+   npm install -g @aws-amplify/cli
+
+   # Configure Amplify
+   amplify configure
+
+   # Initialize Amplify in the project
+   amplify init
+
+   # Push the changes
+   amplify push
+   ```
+
+### Environment Variables
+Make sure to configure these environment variables in AWS Amplify:
+- `NEXTAUTH_URL`
+- `NEXTAUTH_SECRET`
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- `AWS_REGION`
+- `DYNAMODB_TABLE`
+- `S3_BUCKET`
+- Other variables from `.env.production`
+
+### Build Settings
+The build settings are automatically configured in `amplify.yml`:
+- Node.js 18 environment
+- npm ci for clean install
+- Build command: `npm run build`
+- Output directory: `.next`
+
+### Monitoring and Logs
+- Monitor your deployment in the AWS Amplify Console
+- Check build logs for any issues
+- View application logs in CloudWatch
+
 ## 🤝 Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.

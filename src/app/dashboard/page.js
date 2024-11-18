@@ -91,7 +91,11 @@ export default function Dashboard() {
         initialized: true
       })
     }
-  }, [session, userData.initialized])
+  }, [session, userData.initialized, updateUserData])
+
+  useEffect(() => {
+    updateUserData();
+  }, [updateUserData]);
 
   const getProfileImage = () => {
     return session?.user?.image || userData?.image || '/default-avatar.png'
@@ -683,6 +687,7 @@ ${userData.name || 'A LinksGo User'}`)
         isOpen={isQRModalOpen}
         onClose={() => setIsQRModalOpen(false)}
       />
+      <p>We&apos;d love to hear your thoughts! Please click &ldquo;New Issue&rdquo; to share your feedback.</p>
     </div>
   )
 }
