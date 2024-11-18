@@ -1,36 +1,232 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# LinksGo - Modern Link Management Platform
 
-## Getting Started
+<div align="center">
+  <img src="public/logo.png" alt="LinksGo Logo" width="200"/>
+  <p>Your All-in-One Link Management Platform</p>
+  
+  [![Next.js](https://img.shields.io/badge/Next.js-13-black)](https://nextjs.org/)
+  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+  
+  [Demo](https://linksgo.vercel.app) • [Documentation](https://linksgo.vercel.app/docs) • [Contributing](CONTRIBUTING.md)
+</div>
 
-First, run the development server:
+## 🌟 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 🔗 **Smart Link Management**
+  - Custom short links
+  - QR code generation
+  - Link analytics
+  - One-time links
+
+- 👤 **User Profiles**
+  - Customizable bio pages
+  - Social media integration
+  - Profile analytics
+  - Custom themes
+
+- 🎨 **Modern UI/UX**
+  - Responsive design
+  - Dark/Light mode
+  - Mobile-first approach
+  - Smooth animations
+
+- 🚀 **Progressive Web App**
+  - Offline support
+  - Install on devices
+  - Push notifications
+  - Fast performance
+
+- 🔒 **Security**
+  - OAuth authentication
+  - Rate limiting
+  - HTTPS enforced
+  - Data encryption
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18 or later
+- npm or yarn
+- Google OAuth credentials
+- AWS account (for deployment)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/linksgo.git
+   cd linksgo
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables:
+   ```bash
+   cp .env.local.example .env.local
+   # Edit .env.local with your credentials
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+Visit [http://localhost:3000](http://localhost:3000) to see the application.
+
+## 🏗️ Tech Stack
+
+- **Framework**: [Next.js 13](https://nextjs.org/)
+- **UI Library**: [NextUI](https://nextui.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Authentication**: [NextAuth.js](https://next-auth.js.org/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Database**: [DynamoDB](https://aws.amazon.com/dynamodb/)
+- **Storage**: [AWS S3](https://aws.amazon.com/s3/)
+- **Deployment**: [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/)
+
+## 📱 Screenshots
+
+<div align="center">
+  <img src="public/screenshot-1.png" alt="Dashboard" width="45%"/>
+  <img src="public/screenshot-2.png" alt="Profile" width="45%"/>
+</div>
+
+## 🚀 Deployment
+
+LinksGo can be deployed to various platforms. We recommend AWS Elastic Beanstalk for production:
+
+1. Set up AWS credentials
+2. Configure environment variables
+3. Run deployment command:
+   ```bash
+   npm run deploy:aws
+   ```
+
+Detailed deployment instructions are available in [DEPLOYMENT.md](DEPLOYMENT.md).
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+## 📝 Documentation
+
+- [API Documentation](https://linksgo.vercel.app/docs/api)
+- [User Guide](https://linksgo.vercel.app/docs/guide)
+- [Development Guide](https://linksgo.vercel.app/docs/development)
+- [Deployment Guide](https://linksgo.vercel.app/docs/deployment)
+
+## 🔑 Environment Variables
+
+Required environment variables:
+
+```env
+NEXT_PUBLIC_APP_URL=your-app-url
+NEXTAUTH_URL=your-app-url
+NEXTAUTH_SECRET=your-secret
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+AWS_ACCESS_KEY_ID=your-aws-key
+AWS_SECRET_ACCESS_KEY=your-aws-secret
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📊 Project Structure
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```
+linksgo/
+├── src/
+│   ├── app/           # Next.js 13 app directory
+│   ├── components/    # React components
+│   ├── lib/          # Utility functions
+│   ├── hooks/        # Custom React hooks
+│   └── styles/       # Global styles
+├── public/           # Static assets
+├── .platform/        # AWS configuration
+└── scripts/         # Utility scripts
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧪 Testing
 
-## Learn More
+Run the test suite:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run test        # Run unit tests
+npm run test:e2e    # Run E2E tests
+npm run test:ci     # Run all tests
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📈 Analytics
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+LinksGo provides comprehensive analytics:
 
-## Deploy on Vercel
+- Link click tracking
+- Visitor demographics
+- Device statistics
+- Conversion rates
+- Custom events
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔒 Security
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- OAuth 2.0 authentication
+- HTTPS enforcement
+- Rate limiting
+- Data encryption
+- Regular security audits
+- Compliance with GDPR
+
+## 📱 PWA Features
+
+- Offline support
+- Push notifications
+- Home screen installation
+- Background sync
+- Fast performance
+
+## 🌐 Browser Support
+
+- Chrome (last 2 versions)
+- Firefox (last 2 versions)
+- Safari (last 2 versions)
+- Edge (last 2 versions)
+
+## 🎯 Roadmap
+
+- [ ] Advanced analytics dashboard
+- [ ] Custom domain support
+- [ ] Team collaboration
+- [ ] API access
+- [ ] Enhanced security features
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+**Rodolfo Hernández**
+- Website: [codewithrodi.com](https://codewithrodi.com)
+- GitHub: [@codewithrodi](https://github.com/codewithrodi)
+- Email: contact@codewithrodi.com
+
+## 🙏 Acknowledgments
+
+- [Next.js Team](https://nextjs.org/)
+- [Vercel](https://vercel.com/)
+- [NextUI Team](https://nextui.org/)
+- [Open Source Community](https://opensource.org/)
+
+---
+
+<div align="center">
+  Made with ❤️ by <a href="https://github.com/codewithrodi">Rodolfo Hernández</a>
+</div>
