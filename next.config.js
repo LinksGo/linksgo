@@ -15,6 +15,16 @@ const nextConfig = {
     optimizeCss: true,
     optimizeImages: true,
   },
+  // Production optimizations
+  productionBrowserSourceMaps: false,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  // Cache optimization
+  onDemandEntries: {
+    maxInactiveAge: 60 * 60 * 1000, // 1 hour
+    pagesBufferLength: 5,
+  }
 }
 
 module.exports = nextConfig
