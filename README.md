@@ -1,14 +1,9 @@
 # LinksGo - Modern Link Management Platform
 
 <div align="center">
-  <img src="1.png" alt="LinksGo Logo" width="200"/>
   <p>Your All-in-One Link Management Platform</p>
+
   
-  [![Next.js](https://img.shields.io/badge/Next.js-13-black)](https://nextjs.org/)
-  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-  
-  [Demo](https://linksgo.vercel.app) • [Documentation](https://linksgo.vercel.app/docs) • [Contributing](CONTRIBUTING.md)
 </div>
 
 ## 🌟 Features
