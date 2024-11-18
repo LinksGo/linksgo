@@ -3,8 +3,9 @@
 import { useSearchParams } from 'next/navigation'
 import { Card, CardBody, Button } from "@nextui-org/react"
 import Link from 'next/link'
+import { Suspense } from 'react'
 
-export default function ErrorPage() {
+function ErrorContent() {
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
 
@@ -32,5 +33,21 @@ export default function ErrorPage() {
         </CardBody>
       </Card>
     </div>
+  )
+}
+
+export default function ErrorPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardBody className="text-center space-y-4">
+            <h1 className="text-2xl font-bold">Loading...</h1>
+          </CardBody>
+        </Card>
+      </div>
+    }>
+      <ErrorContent />
+    </Suspense>
   )
 }

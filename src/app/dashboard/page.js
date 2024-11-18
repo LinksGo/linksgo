@@ -2,7 +2,7 @@
 
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import AddLinkModal from '@/components/AddLinkModal'
 import ProfileSettingsModal from '@/components/ProfileSettingsModal'
 import ShrinkLinkModal from '@/components/ShrinkLinkModal'
@@ -56,7 +56,7 @@ import {
 import { toast } from 'react-hot-toast'
 import ThemeLogo from '@/components/ThemeLogo'
 
-export default function Dashboard() {
+function DashboardContent() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -689,5 +689,21 @@ ${userData.name || 'A LinksGo User'}`)
       />
       <p>We&apos;d love to hear your thoughts! Please click &ldquo;New Issue&rdquo; to share your feedback.</p>
     </div>
+  )
+}
+
+export default function Dashboard() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardBody className="text-center space-y-4">
+            <h1 className="text-2xl font-bold">Loading Dashboard...</h1>
+          </CardBody>
+        </Card>
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
   )
 }
