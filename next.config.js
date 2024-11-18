@@ -24,7 +24,15 @@ const nextConfig = {
   onDemandEntries: {
     maxInactiveAge: 60 * 60 * 1000, // 1 hour
     pagesBufferLength: 5,
-  }
+  },
+  // CSS Configuration
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader', 'postcss-loader'],
+    });
+    return config;
+  },
 }
 
 module.exports = nextConfig
