@@ -13,7 +13,6 @@ const nextConfig = {
   // Amplify specific optimizations
   experimental: {
     optimizeCss: true,
-    optimizeImages: true,
   },
   // Production optimizations
   productionBrowserSourceMaps: false,
@@ -24,14 +23,6 @@ const nextConfig = {
   onDemandEntries: {
     maxInactiveAge: 60 * 60 * 1000, // 1 hour
     pagesBufferLength: 5,
-  },
-  // CSS Configuration
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader', 'postcss-loader'],
-    });
-    return config;
   },
 }
 
