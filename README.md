@@ -214,9 +214,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Rodolfo Hernández**
-- Website: [codewithrodi.com](https://codewithrodi.com)
-- GitHub: [@codewithrodi](https://github.com/codewithrodi)
-- Email: contact@codewithrodi.com
+- Website: [https://retr0-sec.netlify.app/](https://retr0-sec.netlify.app/)
+- GitHub: [@Retr0-XD](https://github.com/Retr0-XD)
+- Email: retr0secanddev@gmail.com
 
 ## 🙏 Acknowledgments
 
