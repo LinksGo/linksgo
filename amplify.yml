@@ -4,6 +4,9 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - node -v
+        # Export environment variables to .env.production
+        - env | grep -e NEXT_PUBLIC_ -e NEXTAUTH_ -e GOOGLE_ -e REGION -e ACCESS_KEY -e SECRET_KEY -e APP_ >> .env.production
     build:
       commands:
         - npm run build
@@ -11,6 +14,8 @@ frontend:
     baseDirectory: .next
     files:
       - '**/*'
+      - ../node_modules/**/*
+      - ../package.json
   cache:
     paths:
       - node_modules/**/*
