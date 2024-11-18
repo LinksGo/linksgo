@@ -1,14 +1,9 @@
 # LinksGo - Modern Link Management Platform
 
 <div align="center">
-  <img src="public/logo.png" alt="LinksGo Logo" width="200"/>
   <p>Your All-in-One Link Management Platform</p>
+
   
-  [![Next.js](https://img.shields.io/badge/Next.js-13-black)](https://nextjs.org/)
-  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-  
-  [Demo](https://linksgo.vercel.app) • [Documentation](https://linksgo.vercel.app/docs) • [Contributing](CONTRIBUTING.md)
 </div>
 
 ## 🌟 Features
@@ -214,9 +209,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Rodolfo Hernández**
-- Website: [codewithrodi.com](https://codewithrodi.com)
-- GitHub: [@codewithrodi](https://github.com/codewithrodi)
-- Email: contact@codewithrodi.com
+- Website: [https://retr0-sec.netlify.app/](https://retr0-sec.netlify.app/)
+- GitHub: [@Retr0-XD](https://github.com/Retr0-XD)
+- Email: retr0secanddev@gmail.com
 
 ## 🙏 Acknowledgments
 
@@ -228,5 +223,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-  Made with ❤️ by <a href="https://github.com/codewithrodi">Rodolfo Hernández</a>
+  Made with ❤️ by <a href="github.com/Retr0-XD">Retr0</a>
 </div>
