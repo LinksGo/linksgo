@@ -1,7 +1,15 @@
 {
   "name": "linksgo",
-  "version": "0.1.0",
+  "version": "3.6.2",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LinksGo/linksgo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LinksGo/linksgo/issues"
+  },
+  "homepage": "https://github.com/LinksGo/linksgo#readme",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

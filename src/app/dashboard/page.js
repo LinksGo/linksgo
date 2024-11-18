@@ -162,7 +162,7 @@ ${userData.name || 'A LinksGo User'}`)
   }
 
   const handleGithubIssue = () => {
-    window.open('https://github.com/retr0security/linksgo/issues/new', '_blank')
+    window.open('https://github.com/LinksGo/linksgo/issues', '_blank')
     toast.success('Opening GitHub issues...', { duration: 2000 })
   }
 
