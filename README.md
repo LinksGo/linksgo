@@ -1,7 +1,7 @@
 # LinksGo - Modern Link Management Platform
 
 <div align="center">
-  <img src="public/logo.png" alt="LinksGo Logo" width="200"/>
+  <img src="1.png" alt="LinksGo Logo" width="200"/>
   <p>Your All-in-One Link Management Platform</p>
   
   [![Next.js](https://img.shields.io/badge/Next.js-13-black)](https://nextjs.org/)
