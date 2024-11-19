@@ -24,6 +24,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@shadcn/ui": "^0.0.4",
     "@supabase/ssr": "^0.5.2",
+    "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "aws-amplify": "^6.0.5",
     "class-variance-authority": "^0.7.0",
     "critters": "^0.0.25",
