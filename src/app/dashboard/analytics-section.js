@@ -1,24 +1,27 @@
 import { Card } from '@/components/ui/card';
+import { BarChart3, Users } from 'lucide-react';
 
-export default function AnalyticsSection({ stats }) {
+export default function AnalyticsSection({ links = [] }) {
+  // Calculate total clicks
+  const totalClicks = links.reduce((sum, link) => sum + (link.clicks || 0), 0);
+  
+  // Calculate click through rate
+  const ctr = links.length > 0 ? ((totalClicks / links.length) * 100).toFixed(1) : 0;
+
   return (
-    <div className="grid gap-4 md:grid-cols-3 mt-4">
-      {/* Summary Cards */}
-      <Card className="p-4">
-        <h3 className="text-sm font-medium text-gray-500">Total Views</h3>
-        <p className="text-2xl font-bold">{stats.totalViews}</p>
-        <p className="text-sm text-gray-500 mt-1">All-time profile views</p>
-      </Card>
-      <Card className="p-4">
-        <h3 className="text-sm font-medium text-gray-500">Views Per Day</h3>
-        <p className="text-2xl font-bold">{stats.viewRate}</p>
-        <p className="text-sm text-gray-500 mt-1">Average daily views</p>
-      </Card>
-      <Card className="p-4">
-        <h3 className="text-sm font-medium text-gray-500">Total Links</h3>
-        <p className="text-2xl font-bold">{stats.totalLinks}</p>
-        <p className="text-sm text-gray-500 mt-1">Active links in your profile</p>
-      </Card>
+    <div className="space-y-4">
+      <div className="grid gap-4">
+        <Card className="p-4">
+          <h3 className="text-sm font-medium text-gray-500">Total Clicks</h3>
+          <p className="text-2xl font-bold">{totalClicks}</p>
+          <p className="text-sm text-gray-500 mt-1">All-time link clicks</p>
+        </Card>
+        <Card className="p-4">
+          <h3 className="text-sm font-medium text-gray-500">Click Rate</h3>
+          <p className="text-2xl font-bold">{ctr}%</p>
+          <p className="text-sm text-gray-500 mt-1">Average clicks per link</p>
+        </Card>
+      </div>
     </div>
   );
 }
