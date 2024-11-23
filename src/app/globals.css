@@ -2,20 +2,246 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 4%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 4%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 224.3 76.3% 48%;
+  }
+
+  .cyberpunk {
+    --background: 263 85% 3%;
+    --foreground: 0 0% 100%;
+    --card: 263 85% 6%;
+    --card-foreground: 0 0% 100%;
+    --popover: 263 85% 3%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 320 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 180 100% 50%;
+    --secondary-foreground: 263 85% 3%;
+    --muted: 263 85% 15%;
+    --muted-foreground: 180 100% 90%;
+    --accent: 320 100% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 320 100% 60%;
+    --input: 263 85% 15%;
+    --ring: 320 100% 60%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom Animations */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes cyberpunk-grid {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+@keyframes neon-pulse {
+  0% { box-shadow: 0 0 15px rgba(168,85,247,0.5); }
+  50% { box-shadow: 0 0 25px rgba(168,85,247,0.7); }
+  100% { box-shadow: 0 0 15px rgba(168,85,247,0.5); }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes scrollHorizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes psycho-gradient {
+  0% {
+    background-position: 0% 50%;
+    background-image: linear-gradient(-45deg, #FF3D00, #00C853, #2979FF);
+  }
+  33% {
+    background-position: 100% 50%;
+    background-image: linear-gradient(-45deg, #00C853, #2979FF, #AA00FF);
+  }
+  66% {
+    background-position: 0% 50%;
+    background-image: linear-gradient(-45deg, #2979FF, #AA00FF, #FF3D00);
+  }
+  100% {
+    background-position: 100% 50%;
+    background-image: linear-gradient(-45deg, #FF3D00, #00C853, #2979FF);
+  }
+}
+
+.psycho-gradient {
+  background-size: 200% 200% !important;
+  animation: psycho-gradient 8s ease infinite !important;
+  background-image: linear-gradient(-45deg, #FF3D00, #00C853, #2979FF) !important;
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .animate-gradient {
+    animation: gradient 8s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  .animate-neon {
+    animation: neon-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-cyberpunk-grid {
+    animation: cyberpunk-grid 20s linear infinite;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px theme('colors.primary.DEFAULT'),
+                 0 0 20px theme('colors.primary.DEFAULT'),
+                 0 0 30px theme('colors.primary.DEFAULT');
+  }
+
+  .neon-border {
+    box-shadow: 0 0 15px theme('colors.primary.DEFAULT'),
+                inset 0 0 15px theme('colors.primary.DEFAULT');
+  }
+
+  .cyberpunk-link {
+    @apply relative overflow-hidden rounded-lg border border-primary/50 bg-card/90 p-4 transition-all duration-300;
+    box-shadow: 0 0 15px theme('colors.primary.DEFAULT'),
+                inset 0 0 5px theme('colors.primary.DEFAULT');
+  }
+
+  .cyberpunk-link:hover {
+    @apply border-primary bg-primary/20;
+    box-shadow: 0 0 25px theme('colors.primary.DEFAULT'),
+                inset 0 0 15px theme('colors.primary.DEFAULT');
+  }
+
+  .cyberpunk-link-text {
+    @apply font-semibold text-white;
+    text-shadow: 0 0 8px theme('colors.primary.DEFAULT'),
+                 0 0 12px theme('colors.primary.DEFAULT');
+    letter-spacing: 0.01em;
+  }
+
+  .cyberpunk-link-description {
+    @apply text-sm text-white/90;
+    text-shadow: 0 0 5px theme('colors.secondary.DEFAULT'),
+                 0 0 8px theme('colors.secondary.DEFAULT');
+  }
+
+  .tech-scroll {
+    animation: scrollHorizontal 20s linear infinite;
+    display: flex;
+  }
+
+  .tech-scroll:hover {
+    animation-play-state: paused;
+  }
+
+  .animate-cyberpunk-grid {
+    animation: cyberpunk-grid 15s linear infinite;
+    background-image: linear-gradient(45deg, 
+      #ff0080,
+      #7928ca,
+      #00ff00,
+      #ff0080
+    );
+    background-size: 400% 400%;
+  }
+
+  .animate-gradient-x {
+    animation: gradient-x 15s linear infinite;
+  }
+
+  .animate-gradient-y {
+    animation: gradient-y 10s linear infinite;
+  }
+
+  @keyframes gradient-x {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  @keyframes gradient-y {
+    0% { transform: translateY(-100%); }
+    50% { transform: translateY(100%); }
+    100% { transform: translateY(-100%); }
+  }
 }

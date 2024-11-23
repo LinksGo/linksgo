@@ -1,0 +1,112 @@
+-- Create profiles table
+create table profiles (
+  id uuid references auth.users on delete cascade primary key,
+  full_name text,
+  avatar_url text,
+  bio text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Create links table
+create table links (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references auth.users on delete cascade not null,
+  title text not null,
+  url text not null,
+  description text,
+  icon text,
+  position integer not null default 0,
+  is_active boolean not null default true,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Create customization table
+create table customization (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references auth.users on delete cascade not null unique,
+  settings jsonb not null default '{
+    "theme": "minimal",
+    "spacing": 16,
+    "roundedCorners": true,
+    "showShadow": true,
+    "glassmorphism": false,
+    "backgroundImage": null,
+    "backgroundBlur": 0,
+    "backgroundOpacity": 80
+  }'::jsonb,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Set up Row Level Security (RLS)
+alter table profiles enable row level security;
+alter table links enable row level security;
+alter table customization enable row level security;
+
+-- Create policies
+create policy "Public profiles are viewable by everyone."
+  on profiles for select
+  using ( true );
+
+create policy "Users can insert their own profile."
+  on profiles for insert
+  with check ( auth.uid() = id );
+
+create policy "Users can update own profile."
+  on profiles for update
+  using ( auth.uid() = id );
+
+create policy "Public links are viewable by everyone."
+  on links for select
+  using ( true );
+
+create policy "Users can insert their own links."
+  on links for insert
+  with check ( auth.uid() = user_id );
+
+create policy "Users can update own links."
+  on links for update
+  using ( auth.uid() = user_id );
+
+create policy "Users can delete own links."
+  on links for delete
+  using ( auth.uid() = user_id );
+
+create policy "Public customization settings are viewable by everyone."
+  on customization for select
+  using ( true );
+
+create policy "Users can insert their own customization settings."
+  on customization for insert
+  with check ( auth.uid() = user_id );
+
+create policy "Users can update own customization settings."
+  on customization for update
+  using ( auth.uid() = user_id );
+
+-- Create functions
+create or replace function handle_updated_at()
+returns trigger as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$ language plpgsql;
+
+-- Create triggers
+create trigger handle_updated_at
+  before update on profiles
+  for each row
+  execute procedure handle_updated_at();
+
+create trigger handle_updated_at
+  before update on links
+  for each row
+  execute procedure handle_updated_at();
+
+create trigger handle_updated_at
+  before update on customization
+  for each row
+  execute procedure handle_updated_at();

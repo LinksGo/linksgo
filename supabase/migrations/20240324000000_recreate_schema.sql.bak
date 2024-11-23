@@ -1,0 +1,165 @@
+-- Drop existing tables and functions
+drop table if exists link_clicks cascade;
+drop table if exists page_views cascade;
+drop table if exists links cascade;
+drop table if exists profiles cascade;
+drop table if exists customization cascade;
+drop table if exists link_analytics cascade;
+
+-- Create profiles table
+create table profiles (
+  id uuid references auth.users on delete cascade primary key,
+  username text unique,
+  full_name text,
+  avatar_url text,
+  website text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Create links table
+create table links (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references profiles(id) on delete cascade not null,
+  title text not null,
+  url text not null,
+  description text,
+  is_active boolean default true,
+  position integer default 0,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Create link_clicks table
+create table link_clicks (
+  id uuid default uuid_generate_v4() primary key,
+  link_id uuid references links(id) on delete cascade not null,
+  user_agent text,
+  device_type text,
+  browser text,
+  os text,
+  country text,
+  city text,
+  referrer text,
+  created_at timestamptz default now()
+);
+
+-- Create page_views table
+create table page_views (
+  id uuid default uuid_generate_v4() primary key,
+  profile_id uuid references profiles(id) on delete cascade not null,
+  user_agent text,
+  device_type text,
+  browser text,
+  os text,
+  country text,
+  city text,
+  referrer text,
+  created_at timestamptz default now()
+);
+
+-- Create customization table
+create table customization (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references profiles(id) on delete cascade unique not null,
+  theme text default 'light',
+  font_family text default 'Inter',
+  background_color text default '#ffffff',
+  text_color text default '#000000',
+  button_style text default 'rounded',
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Create indexes
+create index links_user_id_idx on links(user_id);
+create index link_clicks_link_id_idx on link_clicks(link_id);
+create index page_views_profile_id_idx on page_views(profile_id);
+
+-- Enable Row Level Security
+alter table profiles enable row level security;
+alter table links enable row level security;
+alter table link_clicks enable row level security;
+alter table page_views enable row level security;
+alter table customization enable row level security;
+
+-- Create policies
+create policy "Public profiles are viewable by everyone"
+  on profiles for select using (true);
+
+create policy "Users can insert their own profile"
+  on profiles for insert with check (auth.uid() = id);
+
+create policy "Users can update their own profile"
+  on profiles for update using (auth.uid() = id);
+
+create policy "Links are viewable by everyone"
+  on links for select using (true);
+
+create policy "Users can insert their own links"
+  on links for insert with check (auth.uid() = user_id);
+
+create policy "Users can update their own links"
+  on links for update using (auth.uid() = user_id);
+
+create policy "Users can delete their own links"
+  on links for delete using (auth.uid() = user_id);
+
+create policy "Link clicks are viewable by link owner"
+  on link_clicks for select using (
+    auth.uid() in (
+      select user_id from links where id = link_clicks.link_id
+    )
+  );
+
+create policy "Anyone can insert link clicks"
+  on link_clicks for insert with check (true);
+
+create policy "Page views are viewable by profile owner"
+  on page_views for select using (auth.uid() = profile_id);
+
+create policy "Anyone can insert page views"
+  on page_views for insert with check (true);
+
+create policy "Users can view their own customization"
+  on customization for select using (auth.uid() = user_id);
+
+create policy "Users can insert their own customization"
+  on customization for insert with check (auth.uid() = user_id);
+
+create policy "Users can update their own customization"
+  on customization for update using (auth.uid() = user_id);
+
+-- Create functions
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id, username, full_name, avatar_url)
+  values (new.id, new.raw_user_meta_data->>'username', new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');
+  return new;
+end;
+$$ language plpgsql security definer;
+
+-- Add a function to check link count
+CREATE OR REPLACE FUNCTION check_link_limit()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF (SELECT COUNT(*) FROM links WHERE user_id = NEW.user_id) >= 5 THEN
+    RAISE EXCEPTION 'User cannot have more than 5 links' USING ERRCODE = 'check_violation';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Add trigger to enforce link limit
+DROP TRIGGER IF EXISTS enforce_link_limit ON links;
+CREATE TRIGGER enforce_link_limit
+  BEFORE INSERT ON links
+  FOR EACH ROW
+  EXECUTE FUNCTION check_link_limit();
+
+-- Create triggers
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();

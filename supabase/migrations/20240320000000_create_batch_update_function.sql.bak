@@ -1,0 +1,24 @@
+-- Create a custom type for the updates
+CREATE TYPE link_position_update AS (
+    id UUID,
+    position INTEGER
+);
+
+-- Create the function for batch updating link positions
+CREATE OR REPLACE FUNCTION batch_update_link_positions(updates link_position_update[])
+RETURNS void AS $$
+DECLARE
+    update_record link_position_update;
+BEGIN
+    -- Loop through the updates array
+    FOREACH update_record IN ARRAY updates
+    LOOP
+        -- Update each link's position
+        UPDATE links
+        SET 
+            position = update_record.position,
+            updated_at = NOW()
+        WHERE id = update_record.id;
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
