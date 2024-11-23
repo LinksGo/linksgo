@@ -288,11 +288,9 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      
+    <div className="container mx-auto p-4 max-w-full overflow-x-hidden">
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
           {error}
         </div>
       )}
@@ -304,7 +302,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Overview */}
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
           {stats_items.map((item) => (
             <Card key={item.name}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -323,17 +321,17 @@ export default function Dashboard() {
           ))}
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <Card className="col-span-4">
+        <div className="grid gap-4 grid-cols-1 lg:grid-cols-7">
+          <Card className="col-span-1 lg:col-span-4">
             <CardHeader>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <CardTitle>Links</CardTitle>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={copyProfileLink}
                   disabled={copying || !profile?.username}
-                  className="gap-2"
+                  className="gap-2 w-full sm:w-auto"
                 >
                   {copying ? (
                     <>
@@ -367,20 +365,22 @@ export default function Dashboard() {
                     items={links.map(link => link.id)}
                     strategy={verticalListSortingStrategy}
                   >
-                    {links.map((link) => (
-                      <SortableLink
-                        key={link.id}
-                        link={link}
-                        onDelete={handleDeleteLink}
-                      />
-                    ))}
+                    <div className="space-y-2">
+                      {links.map((link) => (
+                        <SortableLink
+                          key={link.id}
+                          link={link}
+                          onDelete={handleDeleteLink}
+                        />
+                      ))}
+                    </div>
                   </SortableContext>
                 </DndContext>
               )}
             </CardContent>
           </Card>
 
-          <Card className="col-span-4 md:col-span-3">
+          <Card className="col-span-1 lg:col-span-3">
             <CardHeader>
               <CardTitle>Analytics</CardTitle>
               <CardDescription>Track your link performance</CardDescription>

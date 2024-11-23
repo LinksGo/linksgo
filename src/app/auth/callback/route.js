@@ -34,17 +34,11 @@ async function generateUniqueUsername(supabase, baseUsername) {
       .eq('username', username)
       .single();
 
-    if (error && error.code === 'PGRST116') {
-      // Error code PGRST116 means no rows returned
+    if (error || !data) {
       isUnique = true;
     } else {
       attempts++;
     }
-  }
-
-  // If we couldn't find a unique username with the base, generate a completely random one
-  if (!isUnique) {
-    username = `user${generateRandomString(8)}`;
   }
 
   return username;
@@ -58,12 +52,12 @@ export async function GET(request) {
     if (!code) {
       console.error('No code provided in callback')
       return NextResponse.redirect(
-        new URL('/login?error=No authentication code received', request.url)
+        `${process.env.NEXT_PUBLIC_APP_URL}/login?error=No authentication code received`
       )
     }
 
     // Create a response early to handle cookies
-    const response = NextResponse.redirect(new URL('/dashboard', request.url))
+    const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/dashboard`)
 
     // Initialize Supabase client with async cookies
     const cookieStore = await cookies()
@@ -86,14 +80,14 @@ export async function GET(request) {
       if (sessionError) {
         console.error('Session error:', sessionError)
         return NextResponse.redirect(
-          new URL(`/login?error=${encodeURIComponent(sessionError.message)}`, request.url)
+          `${process.env.NEXT_PUBLIC_APP_URL}/login?error=${encodeURIComponent(sessionError.message)}`
         )
       }
 
       if (!session) {
         console.error('No session returned')
         return NextResponse.redirect(
-          new URL('/login?error=No session returned', request.url)
+          `${process.env.NEXT_PUBLIC_APP_URL}/login?error=No session returned`
         )
       }
 
@@ -121,7 +115,7 @@ export async function GET(request) {
         if (profileError) {
           console.error('Error creating profile:', profileError);
           return NextResponse.redirect(
-            new URL(`/login?error=${encodeURIComponent('Failed to create profile')}`, request.url)
+            `${process.env.NEXT_PUBLIC_APP_URL}/login?error=${encodeURIComponent('Failed to create profile')}`
           );
         }
       }
@@ -131,13 +125,13 @@ export async function GET(request) {
     } catch (error) {
       console.error('Authentication error:', error)
       return NextResponse.redirect(
-        new URL(`/login?error=${encodeURIComponent(error.message)}`, request.url)
+        `${process.env.NEXT_PUBLIC_APP_URL}/login?error=${encodeURIComponent(error.message)}`
       )
     }
   } catch (error) {
     console.error('Callback error:', error)
     return NextResponse.redirect(
-      new URL(`/login?error=${encodeURIComponent(error.message)}`, request.url)
+      `${process.env.NEXT_PUBLIC_APP_URL}/login?error=${encodeURIComponent(error.message)}`
     )
   }
 }
