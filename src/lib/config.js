@@ -1,8 +1,8 @@
 // Default configuration with fallbacks
 export const getConfig = () => {
   return {
-    // Use environment variable or default to localhost for development
-    domain: process.env.NEXT_PUBLIC_SITE_DOMAIN || 'localhost:3000',
+    // Use environment variable or default to production domain
+    domain: process.env.NEXT_PUBLIC_APP_DOMAIN || 'linksgo.d2718nyykyu03k.amplifyapp.com',
     // Add other configuration items here
   };
 };
